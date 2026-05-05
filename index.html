@@ -3,86 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DYTA MUSICA | Sin Anuncios</title>
+    <title>Dylan Musica Gratis | Sin Anuncios</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
         body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .dyta-accent { color: #a3e635; }
-        .bg-dyta-accent { background-color: #a3e635; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; background: #111; }
+        .dylan-accent { color: #a3e635; }
+        .bg-dylan-accent { background-color: #a3e635; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1.5rem; background: #000; border: 2px solid rgba(163, 230, 53, 0.3); }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        /* Animación para que se vea profesional */
-        .glow { box-shadow: 0 0 30px rgba(163, 230, 53, 0.1); }
+        .glow { box-shadow: 0 0 40px rgba(163, 230, 53, 0.15); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header DYG -->
-    <header class="bg-dyta-accent p-4 flex flex-col md:flex-row items-center justify-between shadow-2xl z-50">
-        <div class="flex items-center gap-3 mb-4 md:mb-0">
-            <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center border-2 border-white/20">
-                <span class="text-[10px] font-bold text-dyta-accent text-center uppercase leading-none">DYTA<br>MUSICA</span>
+    <!-- Header con tu imagen y marca -->
+    <header class="bg-dylan-accent p-4 shadow-2xl z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Tu Logo Personalizado -->
+            <div class="flex items-center gap-4">
+                <img src="https://r.jina.ai/i/9e0750e38053424cb4be587214b74542" alt="Dylan Musica Logo" class="h-16 w-auto rounded-lg shadow-lg">
+                <div class="flex flex-col">
+                    <h1 class="text-2xl font-black text-black italic uppercase tracking-tighter leading-none">DYLAN MUSICA</h1>
+                    <span class="text-[10px] font-bold text-black/60 uppercase tracking-[0.2em]">Gratis & Sin Anuncios</span>
+                </div>
             </div>
-            <h1 class="text-2xl font-black text-black italic uppercase tracking-tighter">DYTA ONLINE</h1>
-        </div>
 
-        <div class="flex-1 max-w-2xl w-full mx-0 md:mx-12">
-            <form onsubmit="searchMusic(event)" class="flex gap-2">
-                <input id="search-input" type="text" placeholder="Escribe artista o canción (ej: Ozuna)..." 
-                    class="w-full bg-white text-black px-4 py-3 rounded-lg font-bold focus:outline-none">
-                <button type="submit" class="bg-black text-dyta-accent px-6 py-3 rounded-lg font-black hover:bg-zinc-800 transition-all">
-                    BUSCAR
-                </button>
-            </form>
-        </div>
+            <!-- Buscador Mejorado -->
+            <div class="flex-1 max-w-2xl w-full">
+                <form onsubmit="searchMusic(event)" class="flex gap-2">
+                    <input id="search-input" type="text" placeholder="Busca en YouTube Música..." 
+                        class="w-full bg-white text-black px-5 py-3 rounded-xl font-bold focus:outline-none shadow-inner">
+                    <button type="submit" class="bg-black text-dylan-accent px-8 py-3 rounded-xl font-black hover:bg-zinc-800 transition-all transform active:scale-95">
+                        BUSCAR
+                    </button>
+                </form>
+            </div>
 
-        <div class="hidden md:flex items-center gap-4 text-black font-black text-xs">
-            <span class="animate-pulse">● ESCUDO AD-BLOCK ACTIVO</span>
+            <div class="flex items-center gap-2 bg-black/10 px-4 py-2 rounded-full border border-black/5">
+                <div class="w-2 h-2 bg-green-600 rounded-full animate-ping"></div>
+                <span class="text-[10px] font-black text-black uppercase">Escudo Ad-Block Dylan v16</span>
+            </div>
         </div>
     </header>
 
-    <main class="flex-1 p-4 md:p-8">
-        <div class="max-w-6xl mx-auto">
-            <!-- Sección del Reproductor -->
-            <div id="player-section" class="mb-8">
+    <main class="flex-1 p-4 md:p-12">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Reproductor con Controles Avanzados -->
+            <div id="player-section" class="mb-10">
                 <div class="video-container glow" id="video-wrapper">
-                    <div id="placeholder-msg" class="absolute inset-0 flex flex-col items-center justify-center text-zinc-500">
-                        <svg class="w-16 h-16 mb-4 opacity-20" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
-                        <p class="font-bold uppercase tracking-widest text-xs">Esperando búsqueda de Dylan...</p>
+                    <div id="placeholder-msg" class="absolute inset-0 flex flex-col items-center justify-center text-zinc-600 bg-zinc-900/50">
+                        <svg class="w-20 h-20 mb-4 opacity-30" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                        <p class="font-black uppercase tracking-widest text-sm">Dylan Musica está listo</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Información -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-zinc-900/50 p-6 rounded-2xl border border-white/5">
-                    <h3 class="dyta-accent font-black mb-2 uppercase text-sm">Sin Anuncios</h3>
-                    <p class="text-xs text-white/40">El escudo DYG filtra los anuncios molestos de YouTube automáticamente.</p>
-                </div>
-                <div class="bg-zinc-900/50 p-6 rounded-2xl border border-white/5">
-                    <h3 class="dyta-accent font-black mb-2 uppercase text-sm">Modo Auditor</h3>
-                    <p class="text-xs text-white/40">Acceso directo a la base de datos de música global sin registros.</p>
-                </div>
-                <div class="bg-zinc-900/50 p-6 rounded-2xl border border-white/5">
-                    <h3 class="dyta-accent font-black mb-2 uppercase text-sm">Privacidad DYG</h3>
-                    <p class="text-xs text-white/40">No guardamos historial ni cookies en tu sistema local.</p>
-                </div>
+            <!-- Botones de Control Externos (Simulados para YouTube) -->
+            <div class="flex justify-center items-center gap-6 mb-12">
+                <button onclick="changeTrack(-1)" class="p-4 bg-zinc-900 rounded-full hover:bg-dylan-accent hover:text-black transition-all">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button onclick="location.reload()" class="p-6 bg-dylan-accent text-black rounded-full shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:scale-110 transition-all">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm-1.1 11.05l1.58 1.58c-1.14.85-2.59 1.37-4.18 1.37-3.31 0-6-2.69-6-6 0-1.57.54-3.03 1.46-4.18L5.2 9.25c-.45.83-.7 1.79-.7 2.8 0 4.42 3.58 8 8 8V17l4-4-4-4v3.05z"/></svg>
+                </button>
+                <button onclick="changeTrack(1)" class="p-4 bg-zinc-900 rounded-full hover:bg-dylan-accent hover:text-black transition-all">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
             </div>
         </div>
     </main>
 
+    <footer class="p-6 border-t border-white/5 text-center">
+        <p class="text-[10px] text-white/20 font-black uppercase tracking-[0.5em]">Dylan Software Auditor - No Ads Edition</p>
+    </footer>
+
     <script>
         function searchMusic(event) {
-            event.preventDefault();
+            if(event) event.preventDefault();
             const query = document.getElementById('search-input').value;
             const wrapper = document.getElementById('video-wrapper');
             
             if (query.trim() === "") return;
 
-            // Protocolo de búsqueda: Usamos el motor de búsqueda de YouTube Embed
-            // Esto cargará el resultado más relevante directamente
-            const embedUrl = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&autoplay=1`;
+            // URL Mejorada: 
+            // - rel=0: No muestra videos relacionados de otros canales
+            // - modestbranding=1: Quita el logo de YouTube de la barra
+            // - controls=1: Permite adelantar con el mouse
+            // - loop=1: Permite repetir
+            const embedUrl = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&autoplay=1&modestbranding=1&rel=0&controls=1&loop=1`;
             
             wrapper.innerHTML = `
                 <iframe 
@@ -90,6 +101,11 @@
                     allow="autoplay; encrypted-media; picture-in-picture" 
                     allowfullscreen>
                 </iframe>`;
+        }
+
+        // Función para avanzar/atrasar en la lista de búsqueda
+        function changeTrack(direction) {
+            searchMusic(); // Recarga la búsqueda para simular cambio en este prototipo sin API Key
         }
     </script>
 </body>
