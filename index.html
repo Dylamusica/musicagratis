@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYTA MUSICA | Sin Anuncios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        .dyta-accent { color: #a3e635; }
+        .bg-dyta-accent { background-color: #a3e635; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header DYG -->
+    <header class="bg-dyta-accent p-4 flex flex-col md:flex-row items-center justify-between shadow-2xl z-50">
+        <div class="flex items-center gap-3 mb-4 md:mb-0">
+            <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center border-2 border-white/20">
+                <span class="text-[10px] font-bold text-dyta-accent text-center uppercase">DYTA<br>MUSICA</span>
+            </div>
+            <h1 class="text-2xl font-black text-black italic uppercase tracking-tighter">DYTA ONLINE</h1>
+        </div>
+
+        <div class="flex-1 max-w-2xl w-full mx-0 md:mx-12">
+            <div class="flex gap-2">
+                <input id="search-input" type="text" placeholder="Busca tu música de YouTube..." 
+                    class="w-full bg-white text-black px-4 py-3 rounded-lg font-bold focus:outline-none">
+                <button onclick="searchMusic()" class="bg-black text-dyta-accent px-6 py-3 rounded-lg font-black hover:bg-white hover:text-black transition-all">
+                    BUSCAR
+                </button>
+            </div>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4 text-black font-black text-xs">
+            <span class="animate-pulse">● ESCUDO AD-BLOCK ACTIVO</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Player Section -->
+            <div id="player-section" class="mb-8">
+                <div class="video-container shadow-[0_0_50px_rgba(163,230,53,0.15)] bg-zinc-900">
+                    <div id="placeholder-msg" class="absolute inset-0 flex flex-col items-center justify-center text-zinc-500">
+                        <svg class="w-20 h-20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
