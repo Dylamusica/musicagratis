@@ -25,6 +25,21 @@
             0%, 100% { box-shadow: 0 0 18px rgba(163,230,53,0.35); }
             50% { box-shadow: 0 0 30px rgba(163,230,53,0.65); }
         }
+        .dl-media-btn {
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            transition: all 0.2s;
+        }
+        .dl-media-btn:hover {
+            background: #27272a;
+            border-color: #a3e635;
+            transform: scale(1.05);
+        }
+        .dl-media-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col">
@@ -68,6 +83,19 @@
                 <div class="mt-6">
                     <h2 id="current-song" class="text-2xl font-black uppercase italic text-zinc-400">Selecciona una canción</h2>
                     <p id="current-channel" class="text-xs text-[#a3e635] font-bold mt-1 uppercase"></p>
+
+                    <!-- Botones de descarga -->
+                    <div id="download-buttons" class="hidden mt-4 items-center gap-3 flex-wrap">
+                        <button id="btn-mp3" onclick="downloadMedia('mp3')" class="dl-media-btn flex items-center gap-2 text-white px-4 py-2 rounded-xl font-black text-xs">
+                            <svg class="w-4 h-4 text-[#a3e635]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-6 2h12v2H6v-2z"/></svg>
+                            ⬇ MP3
+                        </button>
+                        <button id="btn-mp4" onclick="downloadMedia('mp4')" class="dl-media-btn flex items-center gap-2 text-white px-4 py-2 rounded-xl font-black text-xs">
+                            <svg class="w-4 h-4 text-[#a3e635]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-6 2h12v2H6v-2z"/></svg>
+                            ⬇ MP4
+                        </button>
+                        <span id="dl-status" class="text-xs text-zinc-500 font-bold"></span>
+                    </div>
                 </div>
             </div>
         </main>
@@ -101,7 +129,6 @@
             </div>
             <div class="flex-1"></div>
         </div>
-        <!-- Copyright -->
         <div class="border-t border-white/5 py-2 text-center text-[10px] text-zinc-600 font-bold uppercase tracking-widest">
             © 2026 Dylan Musica — Todos los derechos reservados
         </div>
@@ -110,6 +137,7 @@
     <script>
         let results = [];
         let currentIndex = -1;
+        let currentVideoId = null;
         const API_KEY = 'AIzaSyBbCd6nyaUH5zSzOk0rEN1MWHxfxjUOxaA';
 
         async function searchMusic() {
@@ -171,6 +199,8 @@
             const channel = item.snippet.channelTitle;
             const thumb = item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url || '';
 
+            currentVideoId = videoId;
+
             document.getElementById('player-box').innerHTML = `<iframe
                 src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
                 allow="autoplay; encrypted-media; fullscreen"
@@ -183,12 +213,79 @@
             document.getElementById('footer-status').innerText = 'REPRODUCIENDO';
             if (thumb) document.getElementById('footer-thumb').src = thumb;
 
+            // Mostrar botones de descarga
+            const dlBtns = document.getElementById('download-buttons');
+            dlBtns.classList.remove('hidden');
+            dlBtns.classList.add('flex');
+            document.getElementById('dl-status').innerText = '';
+            document.getElementById('btn-mp3').disabled = false;
+            document.getElementById('btn-mp4').disabled = false;
+
             document.querySelectorAll('.playlist-item').forEach((el, i) => {
                 el.classList.toggle('active', i === index);
             });
 
             const activeEl = document.getElementById(`item-${index}`);
             if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        async function downloadMedia(type) {
+            if (!currentVideoId) return;
+
+            const btnMp3 = document.getElementById('btn-mp3');
+            const btnMp4 = document.getElementById('btn-mp4');
+            const dlStatus = document.getElementById('dl-status');
+
+            btnMp3.disabled = true;
+            btnMp4.disabled = true;
+            dlStatus.style.color = '#a3e635';
+            dlStatus.innerText = '⏳ Procesando...';
+
+            const youtubeUrl = `https://www.youtube.com/watch?v=${currentVideoId}`;
+
+            try {
+                const response = await fetch('https://api.cobalt.tools/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: youtubeUrl,
+                        downloadMode: type === 'mp3' ? 'audio' : 'auto',
+                        audioFormat: 'mp3',
+                        videoQuality: '1080',
+                        filenameStyle: 'pretty'
+                    })
+                });
+
+                const data = await response.json();
+
+                // Cobalt puede devolver status: redirect, stream, tunnel, picker
+                const downloadUrl = data.url || (data.picker && data.picker[0]?.url);
+
+                if (downloadUrl) {
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = '';
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    dlStatus.innerText = '✅ ¡Descarga iniciada!';
+                    dlStatus.style.color = '#a3e635';
+                } else {
+                    throw new Error(data.error?.code || 'No se pudo obtener el link');
+                }
+
+            } catch (err) {
+                console.error(err);
+                dlStatus.innerText = '❌ ' + err.message;
+                dlStatus.style.color = '#f87171';
+            }
+
+            btnMp3.disabled = false;
+            btnMp4.disabled = false;
         }
 
         function playNext() {
