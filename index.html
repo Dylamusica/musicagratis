@@ -3,96 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dylan Musica | Premium Gratis</title>
+    <title>Dylan Musica | Gratis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { background-color: #030303; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; background: #000; border: 1px solid #222; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; background: #000; border: 1px solid #333; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #a3e635; border-radius: 10px; }
-        .dylan-card { background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 100%); }
     </style>
 </head>
 <body class="h-screen flex flex-col">
 
-    <!-- Header Dylan -->
-    <header class="h-20 flex items-center justify-between px-6 bg-black border-b border-white/10 z-50">
+    <!-- Header -->
+    <header class="h-20 flex items-center justify-between px-6 bg-black border-b border-white/10">
         <div class="flex items-center gap-4">
-            <!-- Corregido: Si la imagen está en la misma carpeta que el index, se pone así -->
-            <img src="Dylanmusica.jpg" alt="Logo" class="h-12 w-12 object-cover rounded-xl border border-[#a3e635]">
+            <!-- Forzamos la carga de la imagen con una ruta relativa limpia -->
+            <img src="./Dylanmusica.jpg" alt="Logo" class="h-12 w-12 object-cover rounded-xl border border-[#a3e635]" onerror="this.src='https://via.placeholder.com/50?text=D'">
             <div>
-                <h1 class="text-xl font-black italic tracking-tighter leading-none">DYLAN MUSICA</h1>
-                <p class="text-[9px] font-bold text-[#a3e635] uppercase tracking-widest">Premium Sin Anuncios</p>
+                <h1 class="text-xl font-black italic tracking-tighter">DYLAN MUSICA</h1>
+                <p class="text-[9px] font-bold text-[#a3e635] uppercase">Premium Gratis</p>
             </div>
         </div>
 
         <div class="flex-1 max-w-xl mx-8">
-            <div class="relative">
-                <input id="search-input" type="text" placeholder="Busca tu artista favorito..." 
-                    class="w-full bg-[#111] border border-[#333] px-6 py-3 rounded-full focus:outline-none focus:border-[#a3e635] font-bold">
-                <button onclick="searchMusic()" class="absolute right-2 top-1.5 bg-[#a3e635] text-black px-6 py-1.5 rounded-full font-black text-sm hover:scale-105 transition">BUSCAR</button>
+            <div class="relative flex gap-2">
+                <input id="search-input" type="text" placeholder="Busca tu música..." 
+                    class="w-full bg-[#111] border border-[#333] px-6 py-3 rounded-xl focus:outline-none focus:border-[#a3e635] font-bold text-white">
+                <button onclick="searchMusic()" class="bg-[#a3e635] text-black px-6 py-3 rounded-xl font-black hover:scale-105 transition">BUSCAR</button>
             </div>
         </div>
-
-        <div class="hidden lg:block">
-            <div class="bg-[#a3e635]/10 text-[#a3e635] text-[10px] font-black border border-[#a3e635]/20 px-4 py-2 rounded-full">
-                ESCUDO AD-BLOCK DYLAN ACTIVE
-            </div>
+        
+        <div class="hidden lg:block text-[#a3e635] text-[10px] font-black border border-[#a3e635]/20 px-4 py-2 rounded-full">
+            ESCUDO AD-BLOCK DYLAN ACTIVE
         </div>
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <!-- Reproductor -->
         <main class="flex-[3] p-8 overflow-y-auto custom-scroll">
             <div class="max-w-5xl mx-auto">
-                <div class="video-container shadow-2xl shadow-[#a3e635]/5" id="player-box">
+                <div class="video-container" id="player-box">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
-                        <p class="text-zinc-600 font-black uppercase tracking-widest text-sm">Escudo Dylan v16 Listo</p>
+                        <p class="text-zinc-600 font-black uppercase text-sm">Dylan Musica v16 - Listo para sonar</p>
                     </div>
                 </div>
-                <div class="mt-8 flex items-center justify-between">
-                    <div>
-                        <h2 id="current-song" class="text-3xl font-black uppercase italic">Selecciona una canción</h2>
-                        <p class="text-zinc-500 text-sm mt-2">Bypass de anuncios activado correctamente[cite: 1, 2]</p>
-                    </div>
+                <div class="mt-8">
+                    <h2 id="current-song" class="text-3xl font-black uppercase italic">Selecciona una canción</h2>
                 </div>
             </div>
         </main>
 
-        <!-- Lista lateral estilo YT Music -->
         <aside class="flex-1 bg-black p-6 border-l border-white/5 hidden lg:flex flex-col">
-            <h3 class="text-zinc-500 font-black text-xs uppercase mb-6 tracking-widest">A continuación</h3>
-            <div id="playlist" class="space-y-4 overflow-y-auto custom-scroll">
-                <!-- Se llena con JS -->
-            </div>
+            <h3 class="text-zinc-500 font-black text-xs uppercase mb-6">A continuación</h3>
+            <div id="playlist" class="space-y-4 overflow-y-auto custom-scroll"></div>
         </aside>
     </div>
 
-    <!-- Controles Inferiores -->
+    <!-- Footer -->
     <footer class="h-24 bg-[#050505] border-t border-white/10 flex items-center px-8">
         <div class="flex-1 flex items-center gap-4">
-            <img src="Dylanmusica.jpg" class="w-14 h-14 rounded-lg object-cover border border-white/10">
+            <img src="./Dylanmusica.jpg" class="w-14 h-14 rounded-lg object-cover" onerror="this.style.display='none'">
             <div>
                 <div id="footer-song" class="text-sm font-black truncate w-40">Dylan Music App</div>
                 <div class="text-[10px] text-[#a3e635] font-bold">REPRODUCIENDO</div>
             </div>
         </div>
-
-        <div class="flex-[2] flex flex-col items-center gap-2">
-            <div class="flex items-center gap-10">
-                <button class="text-zinc-600 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-                <button onclick="location.reload()" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-                <button class="text-zinc-600 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-            </div>
-            <div class="w-full max-w-md h-1 bg-zinc-800 rounded-full"><div class="w-1/4 h-full bg-[#a3e635]"></div></div>
+        <div class="flex-[2] flex justify-center">
+            <button onclick="location.reload()" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
         </div>
-
-        <div class="flex-1 flex justify-end items-center gap-4">
-            <svg class="w-5 h-5 text-zinc-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            <div class="w-24 h-1 bg-zinc-800 rounded-full"><div class="w-2/3 h-full bg-zinc-500"></div></div>
-        </div>
+        <div class="flex-1"></div>
     </footer>
 
     <script>
@@ -100,19 +81,18 @@
             const query = document.getElementById('search-input').value;
             if (!query) return;
 
-            // Motor de búsqueda directo para evitar el bloqueo de "Video no disponible"
+            // Cambiamos a una URL de búsqueda que YouTube acepta mejor en iframes
             const playerBox = document.getElementById('player-box');
-            playerBox.innerHTML = `<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            playerBox.innerHTML = `<iframe src="https://www.youtube.com/embed/videoseries?listType=search&list=${encodeURIComponent(query)}&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             
             document.getElementById('current-song').innerText = query;
             document.getElementById('footer-song').innerText = query;
 
-            // Actualizar lista lateral
             const playlist = document.getElementById('playlist');
             playlist.innerHTML = [1,2,3,4,5].map(i => `
-                <div class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl cursor-pointer group transition">
-                    <div class="w-10 h-10 bg-zinc-900 rounded flex items-center justify-center font-black text-zinc-700 group-hover:text-[#a3e635]">${i}</div>
-                    <div><p class="text-sm font-bold truncate group-hover:text-white">${query} Mix</p><p class="text-[10px] text-zinc-600">DYLAN MUSIC</p></div>
+                <div class="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl cursor-pointer">
+                    <div class="w-10 h-10 bg-zinc-900 rounded flex items-center justify-center font-black text-[#a3e635]">${i}</div>
+                    <div><p class="text-sm font-bold truncate">${query} Mix</p><p class="text-[10px] text-zinc-600">DYLAN MUSIC</p></div>
                 </div>
             `).join('');
         }
