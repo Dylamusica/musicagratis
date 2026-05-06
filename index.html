@@ -14,7 +14,17 @@
         .playlist-item:hover { background: rgba(163,230,53,0.08); }
         .playlist-item.active { background: rgba(163,230,53,0.15); border-left: 3px solid #a3e635; }
         .thumbnail { width: 64px; height: 40px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
-        #api-warning { display: none; }
+        .dl-btn {
+            background: linear-gradient(135deg, #a3e635 0%, #65a30d 100%);
+            box-shadow: 0 0 18px rgba(163,230,53,0.35);
+            animation: pulse-glow 2.5s ease-in-out infinite;
+            transition: all 0.2s;
+        }
+        .dl-btn:hover { transform: scale(1.06); box-shadow: 0 0 28px rgba(163,230,53,0.6); }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 18px rgba(163,230,53,0.35); }
+            50% { box-shadow: 0 0 30px rgba(163,230,53,0.65); }
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col">
@@ -25,28 +35,24 @@
             <img src="./Dylanmusica.jpg" alt="Logo" class="h-12 w-12 object-cover rounded-xl border border-[#a3e635]" onerror="this.src='https://via.placeholder.com/50?text=D'">
             <div>
                 <h1 class="text-xl font-black italic tracking-tighter">DYLAN MUSICA</h1>
-                <p class="text-[9px] font-bold text-[#a3e635] uppercase">Premium Gratis</p>
             </div>
         </div>
 
         <div class="flex-1 max-w-xl mx-8">
             <div class="relative flex gap-2">
-                <input id="search-input" type="text" placeholder="Busca tu música..." 
+                <input id="search-input" type="text" placeholder="Busca tu música..."
                     class="w-full bg-[#111] border border-[#333] px-6 py-3 rounded-xl focus:outline-none focus:border-[#a3e635] font-bold text-white"
                     onkeydown="if(event.key==='Enter') searchMusic()">
                 <button onclick="searchMusic()" class="bg-[#a3e635] text-black px-6 py-3 rounded-xl font-black hover:scale-105 transition">BUSCAR</button>
             </div>
         </div>
-        
-        <div class="hidden lg:block text-[#a3e635] text-[10px] font-black border border-[#a3e635]/20 px-4 py-2 rounded-full">
-            ESCUDO AD-BLOCK DYLAN ACTIVE
-        </div>
-    </header>
 
-    <!-- API KEY WARNING -->
-    <div id="api-warning" class="bg-yellow-900/80 border border-yellow-500/50 text-yellow-200 text-xs px-6 py-2 font-bold text-center">
-        ⚠️ Necesitas configurar tu YouTube API Key abajo para que funcione la búsqueda.
-    </div>
+        <a href="https://www.mediafire.com/file/7ksxdudhvtnuiaz/DYTA_MUSICA_V16.exe/file" target="_blank"
+            class="dl-btn hidden lg:flex items-center gap-2 text-black px-5 py-2.5 rounded-xl font-black text-xs whitespace-nowrap cursor-pointer no-underline">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-6 2h12v2H6v-2z"/></svg>
+            ⬇ Descargar EXE para PC — Sin Anuncios
+        </a>
+    </header>
 
     <div class="flex flex-1 overflow-hidden">
         <main class="flex-[3] p-8 overflow-y-auto custom-scroll">
@@ -57,17 +63,6 @@
                         <p class="text-zinc-500 font-black uppercase text-sm">Dylan Musica v16</p>
                         <p class="text-zinc-700 text-xs mt-1">Busca una canción para empezar</p>
                     </div>
-                </div>
-
-                <!-- API Key Config -->
-                <div class="mt-6 bg-zinc-900/50 border border-zinc-800 rounded-xl p-4">
-                    <p class="text-zinc-500 text-xs font-bold uppercase mb-2">⚙️ YouTube API Key (necesaria para buscar)</p>
-                    <div class="flex gap-2">
-                        <input id="api-key-input" type="password" placeholder="Pega tu API Key de YouTube aquí..."
-                            class="flex-1 bg-[#111] border border-[#333] px-4 py-2 rounded-lg focus:outline-none focus:border-[#a3e635] text-sm text-white font-mono">
-                        <button onclick="saveApiKey()" class="bg-zinc-700 hover:bg-[#a3e635] hover:text-black text-white px-4 py-2 rounded-lg font-black text-xs transition">GUARDAR</button>
-                    </div>
-                    <p class="text-zinc-700 text-[10px] mt-2">Gratis en: console.cloud.google.com → APIs → YouTube Data API v3 → Credenciales</p>
                 </div>
 
                 <div class="mt-6">
@@ -84,67 +79,52 @@
     </div>
 
     <!-- Footer -->
-    <footer class="h-24 bg-[#050505] border-t border-white/10 flex items-center px-8">
-        <div class="flex-1 flex items-center gap-4">
-            <img id="footer-thumb" src="./Dylanmusica.jpg" class="w-14 h-14 rounded-lg object-cover" onerror="this.style.display='none'">
-            <div>
-                <div id="footer-song" class="text-sm font-black truncate w-48">Dylan Music App</div>
-                <div class="text-[10px] text-[#a3e635] font-bold" id="footer-status">LISTO</div>
+    <footer class="bg-[#050505] border-t border-white/10 flex flex-col">
+        <div class="h-24 flex items-center px-8">
+            <div class="flex-1 flex items-center gap-4">
+                <img id="footer-thumb" src="./Dylanmusica.jpg" class="w-14 h-14 rounded-lg object-cover" onerror="this.style.display='none'">
+                <div>
+                    <div id="footer-song" class="text-sm font-black truncate w-48">Dylan Music App</div>
+                    <div class="text-[10px] text-[#a3e635] font-bold" id="footer-status">LISTO</div>
+                </div>
             </div>
+            <div class="flex-[2] flex justify-center gap-4 items-center">
+                <button onclick="playPrev()" class="w-10 h-10 bg-zinc-800 text-white rounded-full flex items-center justify-center hover:bg-zinc-600 transition">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button onclick="togglePlay()" id="play-btn" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <button onclick="playNext()" class="w-10 h-10 bg-zinc-800 text-white rounded-full flex items-center justify-center hover:bg-zinc-600 transition">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2.5-6l6-4.25v8.5L8.5 12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+            </div>
+            <div class="flex-1"></div>
         </div>
-        <div class="flex-[2] flex justify-center gap-4 items-center">
-            <button onclick="playPrev()" class="w-10 h-10 bg-zinc-800 text-white rounded-full flex items-center justify-center hover:bg-zinc-600 transition">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            <button onclick="togglePlay()" id="play-btn" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition">
-                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <button onclick="playNext()" class="w-10 h-10 bg-zinc-800 text-white rounded-full flex items-center justify-center hover:bg-zinc-600 transition">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2.5-6l6-4.25v8.5L8.5 12zM16 6v12h2V6h-2z"/></svg>
-            </button>
+        <!-- Copyright -->
+        <div class="border-t border-white/5 py-2 text-center text-[10px] text-zinc-600 font-bold uppercase tracking-widest">
+            © 2026 Dylan Musica — Todos los derechos reservados
         </div>
-        <div class="flex-1"></div>
     </footer>
 
     <script>
         let results = [];
         let currentIndex = -1;
-        let API_KEY = localStorage.getItem('yt_api_key') || 'AIzaSyBbCd6nyaUH5zSzOk0rEN1MWHxfxjUOxaA';
-
-        // Key ya configurada
-        document.getElementById('api-key-input').value = API_KEY;
-        document.getElementById('api-warning').style.display = 'none';
-
-        function saveApiKey() {
-            const key = document.getElementById('api-key-input').value.trim();
-            if (!key) return alert('Ingresa una API Key válida');
-            API_KEY = key;
-            localStorage.setItem('yt_api_key', key);
-            document.getElementById('api-warning').style.display = 'none';
-            alert('✅ API Key guardada. ¡Ahora puedes buscar música!');
-        }
+        const API_KEY = 'AIzaSyAgTdeWN0DaENfBpIqfJLwGc1WsOgtitcI';
 
         async function searchMusic() {
             const query = document.getElementById('search-input').value.trim();
             if (!query) return;
 
-            if (!API_KEY) {
-                document.getElementById('api-warning').style.display = 'block';
-                alert('Primero configura tu YouTube API Key en la sección de configuración.');
-                return;
-            }
-
             document.getElementById('current-song').innerText = 'Buscando...';
             document.getElementById('playlist').innerHTML = '<p class="text-zinc-600 text-xs font-bold">Cargando resultados...</p>';
 
             try {
-                const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&videoCategoryId=10&maxResults=15&key=${API_KEY}`;
+                const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=15&key=${API_KEY}`;
                 const res = await fetch(url);
                 const data = await res.json();
 
-                if (data.error) {
-                    throw new Error(data.error.message);
-                }
+                if (data.error) throw new Error(data.error.message);
 
                 results = data.items || [];
 
@@ -191,27 +171,22 @@
             const channel = item.snippet.channelTitle;
             const thumb = item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url || '';
 
-            // Update player
-            const playerBox = document.getElementById('player-box');
-            playerBox.innerHTML = `<iframe 
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
-                allow="autoplay; encrypted-media; fullscreen" 
+            document.getElementById('player-box').innerHTML = `<iframe
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                allow="autoplay; encrypted-media; fullscreen"
                 allowfullscreen>
             </iframe>`;
 
-            // Update info
             document.getElementById('current-song').innerText = title;
             document.getElementById('current-channel').innerText = channel;
             document.getElementById('footer-song').innerText = title;
             document.getElementById('footer-status').innerText = 'REPRODUCIENDO';
             if (thumb) document.getElementById('footer-thumb').src = thumb;
 
-            // Update playlist highlight
             document.querySelectorAll('.playlist-item').forEach((el, i) => {
                 el.classList.toggle('active', i === index);
             });
 
-            // Scroll to active item
             const activeEl = document.getElementById(`item-${index}`);
             if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -227,8 +202,6 @@
         }
 
         function togglePlay() {
-            // Since we use iframe embed, we can't truly pause from outside.
-            // This button reloads current video.
             if (currentIndex >= 0) playVideo(currentIndex);
         }
     </script>
